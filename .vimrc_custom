@@ -1,0 +1,39 @@
+
+" Custom VIM settings
+set nu
+
+autocmd FileType ant setlocal shiftwidth=4 tabstop=4 expandtab
+autocmd FileType go setlocal shiftwidth=4 tabstop=4 noexpandtab
+autocmd FileType groovy setlocal shiftwidth=2 tabstop=2 expandtab
+
+" Set gradle compiler and run make
+au BufRead,BufNewFile *.gradle setfiletype groovy
+
+map <F2> :w<CR> :compiler gradle<CR> :make test<CR>
+":cw 4<CR>
+
+" F7 to call clean redundant Java imports and sort them
+function JavaImpClean()
+    %!~/bin/clean_imports.sh %
+    :JavaImpSort
+endfunction
+:command JavaImpClean exec JavaImpClean()
+:nnoremap <F7> :JavaImpClean<CR>
+
+" Enable JavaImp plugin
+let g:JavaImpPaths = "..." 
+let g:JavaImpDataDir = "..." 
+
+" Enforce the use of h,j,k,l in normal, visual and insert modes
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+vnoremap <up> <nop>
+vnoremap <down> <nop>
+vnoremap <left> <nop>
+vnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
